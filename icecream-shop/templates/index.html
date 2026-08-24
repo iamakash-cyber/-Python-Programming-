@@ -1,183 +1,202 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sweet Scoop Ice Cream</title>
+    <title>Ice Cream Shop</title>
 
     <style>
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
-            background: #fff7f9;
+            background-color: #fff5f8;
             text-align: center;
-        }
-
-        header {
-            background: #ff6f91;
-            color: white;
-            padding: 25px;
-        }
-
-        header h1 {
             margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #d63384;
             font-size: 40px;
+            margin-bottom: 5px;
         }
 
-        .hero {
-            padding: 40px 20px;
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
         }
 
-        .hero h2 {
-            font-size: 32px;
-            color: #444;
+        .search-box {
+            padding: 12px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+            margin-bottom: 10px;
         }
 
-        .products {
+        .flavor-count {
+            color: #d63384;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .shop {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 20px;
-            padding: 20px;
+            margin-top: 20px;
         }
 
-        .card {
-            background: white;
-            width: 220px;
-            padding: 25px;
+        .icecream {
+            background-color: white;
+            width: 200px;
+            padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+        }
+
+        .icecream:hover {
+            transform: translateY(-8px);
         }
 
         .emoji {
             font-size: 60px;
         }
 
-        .card h3 {
+        .icecream h2 {
             color: #333;
+            margin: 10px 0;
         }
 
         .price {
             font-size: 20px;
             font-weight: bold;
-            color: #ff4f7b;
+            color: #28a745;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 5px;
+            width: 160px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
 
         button {
-            background: #ff6f91;
+            background-color: #d63384;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         button:hover {
-            background: #ff416c;
-        }
-
-        .order {
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            width: 350px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        input, select {
-            width: 90%;
-            padding: 12px;
-            margin: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            background-color: #b02a6b;
         }
 
         footer {
-            background: #333;
-            color: white;
-            padding: 20px;
             margin-top: 40px;
+            padding: 20px;
+            color: #777;
+            border-top: 1px solid #ddd;
         }
     </style>
 </head>
 
 <body>
 
-<header>
-    <h1>🍦 Sweet Scoop 🍦</h1>
-    <p>The happiest place for ice cream lovers!</p>
-</header>
+    <h1>🍦 Welcome to My Ice Cream Shop 🍦</h1>
 
-<section class="hero">
-    <h2>Our Delicious Ice Creams</h2>
-    <p>Freshly made. Deliciously creamy. ❤️</p>
-</section>
+    <p class="subtitle">
+        Choose your favorite flavor and enjoy your sweet treat!
+    </p>
 
-<section class="products">
+    <input
+        type="text"
+        id="searchInput"
+        class="search-box"
+        placeholder="🔍 Search ice cream..."
+        onkeyup="searchIceCream()"
+    >
 
-    {% for icecream in icecreams %}
+    <p class="flavor-count">
+        Available Flavors: {{ icecreams|length }}
+    </p>
 
-    <div class="card">
+    <div class="shop" id="icecreamShop">
 
-        <div class="emoji">
-            {{ icecream.emoji }}
+        {% for icecream in icecreams %}
+
+        <div class="icecream" data-name="{{ icecream.name }}">
+
+            <div class="emoji">
+                {{ icecream.emoji }}
+            </div>
+
+            <h2>{{ icecream.name }}</h2>
+
+            <p class="price">
+                ₹{{ icecream.price }}
+            </p>
+
+            <form action="/order" method="POST">
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    required
+                >
+
+                <input
+                    type="hidden"
+                    name="flavor"
+                    value="{{ icecream.name }}"
+                >
+
+                <br><br>
+
+                <button type="submit">
+                    Order Now 🍦
+                </button>
+
+            </form>
+
         </div>
 
-        <h3>{{ icecream.name }}</h3>
-
-        <p class="price">
-            ₹{{ icecream.price }}
-        </p>
+        {% endfor %}
 
     </div>
 
-    {% endfor %}
+    <footer>
+        🍨 Made with love | My Ice Cream Shop 🍦
+    </footer>
 
-</section>
 
-<section class="order">
+    <script>
+        function searchIceCream() {
+            let input = document.getElementById("searchInput");
+            let filter = input.value.toLowerCase();
 
-    <h2>🍨 Place Your Order</h2>
+            let cards = document.getElementsByClassName("icecream");
 
-    <form action="/order" method="POST">
+            for (let i = 0; i < cards.length; i++) {
 
-        <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            required
-        >
+                let name = cards[i].getAttribute("data-name").toLowerCase();
 
-        <select name="flavor" required>
-
-            <option value="">Choose Flavor</option>
-
-            {% for icecream in icecreams %}
-                <option value="{{ icecream.name }}">
-                    {{ icecream.name }} - ₹{{ icecream.price }}
-                </option>
-            {% endfor %}
-
-        </select>
-
-        <br>
-
-        <button type="submit">
-            Order Now 🍦
-        </button>
-
-    </form>
-
-</section>
-
-<footer>
-    <p>© 2026 Sweet Scoop Ice Cream</p>
-</footer>
+                if (name.includes(filter)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 
 </body>
 </html>

@@ -9,7 +9,8 @@ icecreams = [
     {"name": "Strawberry", "price": 90, "emoji": "🍓"},
     {"name": "Mango", "price": 100, "emoji": "🥭"},
     {"name": "Butterscotch", "price": 110, "emoji": "🍨"},
-    {"name": "Pista", "price": 120, "emoji": "🍧"}
+    {"name": "Pista", "price": 120, "emoji": "🍧"},
+    {"name": "Coffee", "price": 130, "emoji": "☕"}
 ]
 
 
