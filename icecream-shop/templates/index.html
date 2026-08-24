@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sweet Scoop Ice Cream</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff7f9;
+            text-align: center;
+        }
+
+        header {
+            background: #ff6f91;
+            color: white;
+            padding: 25px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+
+        .hero {
+            padding: 40px 20px;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            color: #444;
+        }
+
+        .products {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            width: 220px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .emoji {
+            font-size: 60px;
+        }
+
+        .card h3 {
+            color: #333;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff4f7b;
+        }
+
+        button {
+            background: #ff6f91;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #ff416c;
+        }
+
+        .order {
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        input, select {
+            width: 90%;
+            padding: 12px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍦 Sweet Scoop 🍦</h1>
+    <p>The happiest place for ice cream lovers!</p>
+</header>
+
+<section class="hero">
+    <h2>Our Delicious Ice Creams</h2>
+    <p>Freshly made. Deliciously creamy. ❤️</p>
+</section>
+
+<section class="products">
+
+    {% for icecream in icecreams %}
+
+    <div class="card">
+
+        <div class="emoji">
+            {{ icecream.emoji }}
+        </div>
+
+        <h3>{{ icecream.name }}</h3>
+
+        <p class="price">
+            ₹{{ icecream.price }}
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</section>
+
+<section class="order">
+
+    <h2>🍨 Place Your Order</h2>
+
+    <form action="/order" method="POST">
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            required
+        >
+
+        <select name="flavor" required>
+
+            <option value="">Choose Flavor</option>
+
+            {% for icecream in icecreams %}
+                <option value="{{ icecream.name }}">
+                    {{ icecream.name }} - ₹{{ icecream.price }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+        <br>
+
+        <button type="submit">
+            Order Now 🍦
+        </button>
+
+    </form>
+
+</section>
+
+<footer>
+    <p>© 2026 Sweet Scoop Ice Cream</p>
+</footer>
+
+</body>
+</html>
